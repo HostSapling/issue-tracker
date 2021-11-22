@@ -1,16 +1,23 @@
-name: Greetings
-
-on: [pull_request, issues]
-
+name: Label issues
+on:
+  issues:
+    types:
+      - reopened
+      - opened
 jobs:
-  greeting:
+  label_issues:
     runs-on: ubuntu-latest
     permissions:
       issues: write
-      pull-requests: write
     steps:
-    - uses: actions/first-interaction@v1
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        issue-message: 'Thanks for submitting your first issue! hopefully we are able to get to it before it becomes burried. your feedback matters most!'
-        pr-message: 'Your first PR to this board has been submitted. Thanks for your valuable information and support!'
+      - name: Label issues
+        uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
+        with:
+          add-labels: "Help wanted"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Comment on issues
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Thank you for creating an issue ❤️. We'll get right back with you.
