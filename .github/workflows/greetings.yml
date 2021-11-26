@@ -10,11 +10,6 @@ jobs:
     permissions:
       issues: write
     steps:
-      - name: Label issues
-        uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
-        with:
-          add-labels: "Help wanted"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Comment on issues
         uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae
         with:
